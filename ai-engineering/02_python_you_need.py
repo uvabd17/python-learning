@@ -39,14 +39,14 @@ first = posts[0]          # [0] means "the first item". Counting starts at 0.
 # len() gives the length of a list.
 # Replace None with the right expression.
 # ─────────────────────────────────────────────────────────────────
-total_tweets = None
+total_tweets = len(posts)
 
 
 # ─────────────────────────────────────────────────────────────────
 # EXERCISE 2 - get the TEXT of the first tweet.
 # `first` is a dict. One of its keys is "text".
 # ─────────────────────────────────────────────────────────────────
-first_text = None
+first_text = first["text"]
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -61,7 +61,12 @@ first_text = None
 #
 # Write that loop yourself, then set english_count = count
 # ─────────────────────────────────────────────────────────────────
-english_count = None
+count=0
+for post in posts:
+    if post["language"]=="english":
+        count+=1
+    
+english_count = count
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -79,8 +84,13 @@ english_count = None
 #
 # Then set slot_counts = slots
 # ─────────────────────────────────────────────────────────────────
-slot_counts = None
-
+slots={}
+for post in posts:
+    slot=post["time_slot"]
+    if slot not in slots:
+        slots[slot]=0
+    slots[slot]=slots[slot]+1
+slot_counts = slots
 
 # ─────────────────────────────────────────────────────────────────
 # EXERCISE 5 - find every tweet mentioning Panjagutta.
@@ -94,8 +104,11 @@ slot_counts = None
 #       if "panjagutta" in post["text"].lower():
 #           found.append(post)
 # ─────────────────────────────────────────────────────────────────
-panjagutta_posts = None
-
+found=[]
+for post in posts:
+    if "panjagutta" in post["text"].lower():
+        found.append(post)
+panjagutta_posts = found
 
 # ─────────────────────────────────────────────────────────────────
 # EXERCISE 6 - write a FUNCTION.
@@ -111,7 +124,11 @@ panjagutta_posts = None
 #       return tags.get("topics", [])
 # ─────────────────────────────────────────────────────────────────
 def get_topics(post):
-    return None          # <- replace this whole line with the real body
+    tags=post.get("tags")
+    if not tags:
+        return []
+    return tags.get("topics",[])
+# <- replace this whole line with the real body
 
 
 # ═════════════════════════════════════════════════════════════════
